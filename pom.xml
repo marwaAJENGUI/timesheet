@@ -21,10 +21,7 @@
 
 	<dependencies>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -47,14 +44,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.junit.vintage</groupId>
-					<artifactId>junit-vintage-engine</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
-
+		<dependency>
+           <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+		</dependency>
 		<!-- JSF -->
 		<dependency>
 			<groupId>org.apache.myfaces.core</groupId>
@@ -91,61 +85,46 @@
 			<version>6.1</version>
 		</dependency>
 		<!-- JSF -->
-
-		<!-- https://mvnrepository.com/artifact/com.sun.mail/gimap -->
-		<dependency>
-			<groupId>com.sun.mail</groupId>
-			<artifactId>gimap</artifactId>
-			<version>1.6.5</version>
-		</dependency>
-		
-		<!-- https://mvnrepository.com/artifact/org.springframework/spring-aop -->
-		<dependency>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>spring-aop</artifactId>
-		</dependency>
-			 
-		 <!-- https://mvnrepository.com/artifact/junit/junit -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-		
-		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
-		<dependency>
-		    <groupId>org.projectlombok</groupId>
-		    <artifactId>lombok</artifactId>
-		    <version>1.18.14</version>
-		    <scope>provided</scope>
-		</dependency>
-		
-		<!-- https://mvnrepository.com/artifact/org.fusesource.jansi/jansi -->
-		<dependency>
-		    <groupId>org.fusesource.jansi</groupId>
-		    <artifactId>jansi</artifactId>
-		    <version>1.18</version>
-		</dependency>
 		
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
-			<version>1.9.2</version>
+			<version>1.9.6</version>
 		</dependency>
-		
+		<dependency>
+	    <groupId>org.aspectj</groupId>
+	    <artifactId>aspectjrt</artifactId>
+	    <version>1.9.6</version>
+	</dependency>
+		 <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjtools</artifactId>
+            <version>1.9.6</version>
+        </dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.fusesource.jansi/jansi 
+		<dependency>
+		    <groupId>org.fusesource.jansi</groupId>
+		    <artifactId>jansi</artifactId>
+		    <version>1.18</version>
+		</dependency> -->
+
+		<!-- https://mvnrepository.com/artifact/log4j/log4j -->
+		<dependency>
+		    <groupId>log4j</groupId>
+		    <artifactId>log4j</artifactId>
+		    <version>1.2.17</version>
+		</dependency>
+
+	<!-- https://mvnrepository.com/artifact/org.junit/junit-bom -->
+	<dependency>
+	    <groupId>org.junit</groupId>
+	    <artifactId>junit-bom</artifactId>
+	    <version>5.7.0</version>
+	    <type>pom</type>
+	</dependency>
 	</dependencies>
 
-
-
-	<build>
-		<outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
 <distributionManagement>
 	<snapshotRepository>
       <id>nexus-snapshots</id>
