@@ -1,7 +1,7 @@
 package tn.esprit.spring;
 
 import java.util.EnumSet;
-import java.lang.System;
+
 
 import javax.faces.webapp.FacesServlet;
 import javax.servlet.DispatcherType;
@@ -17,20 +17,14 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 import tn.esprit.spring.config.LoginFilter;
-import tn.esprit.spring.config.InvocationTrace;
 
 @SpringBootApplication
 @EnableAutoConfiguration
-@EnableAspectJAutoProxy
+@EnableAspectJAutoProxy()
 @ComponentScan({"tn.esprit.spring.config,tn.esprit.spring.controller,tn.esprit.spring.entities,tn.esprit.spring.repository,tn.esprit.spring.services"})
 
 public class TimesheetApplication {
-/*
-	 @Bean
-	    public  InvocationTrace loggingAspectInvocationTrace() {
-	        return new InvocationTrace();
-	    }
-	    */
+
 	public static void main(String[] args) {
 		SpringApplication.run(TimesheetApplication.class, args);
 		}
