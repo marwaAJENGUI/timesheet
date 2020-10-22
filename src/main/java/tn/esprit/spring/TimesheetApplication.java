@@ -1,7 +1,7 @@
 package tn.esprit.spring;
 
 import java.util.EnumSet;
-
+import java.lang.System;
 
 import javax.faces.webapp.FacesServlet;
 import javax.servlet.DispatcherType;
@@ -20,7 +20,7 @@ import tn.esprit.spring.config.LoginFilter;
 
 @SpringBootApplication
 @EnableAutoConfiguration
-@EnableAspectJAutoProxy()
+@EnableAspectJAutoProxy
 @ComponentScan({"tn.esprit.spring.config,tn.esprit.spring.controller,tn.esprit.spring.entities,tn.esprit.spring.repository,tn.esprit.spring.services"})
 
 public class TimesheetApplication {
