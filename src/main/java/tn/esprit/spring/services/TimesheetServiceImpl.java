@@ -3,6 +3,7 @@ package tn.esprit.spring.services;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,10 +41,12 @@ public class TimesheetServiceImpl implements ITimesheetService {
 	}
     
 	public void affecterMissionADepartement(int missionId, int depId) {
-		if (missionRepository.findById(missionId).isPresent()){
-			Mission mission = missionRepository.findById(missionId).get();
-			if (deptRepoistory.findById(depId).isPresent()){
-				Departement dep = deptRepoistory.findById(depId).get();
+		Optional<Mission> oppMission= missionRepository.findById(missionId);
+		if (oppMission.isPresent()){
+			Mission mission = oppMission.get();
+			Optional<Departement> oppDepartement= deptRepoistory.findById(depId);
+			if (oppDepartement.isPresent()){
+				Departement dep = oppDepartement.get();
 				mission.setDepartement(dep);
 				missionRepository.save(mission);
 			}
@@ -67,8 +70,9 @@ public class TimesheetServiceImpl implements ITimesheetService {
 	
 	public void validerTimesheet(int missionId, int employeId, Date dateDebut, Date dateFin, int validateurId) {
 		log.info("In valider Timesheet");
-		if(employeRepository.findById(validateurId).isPresent()) {
-			Employe validateur = employeRepository.findById(validateurId).get();
+		Optional<Employe> oppEmploye= employeRepository.findById(validateurId);
+		if(oppEmploye.isPresent()) {
+			Employe validateur = oppEmploye.get();
 			//verifier s'il est un chef de departement (interet des enum)
 			if(!validateur.getRole().equals(Role.CHEF_DEPARTEMENT)){
 				log.info("l'employe doit etre chef de departement pour valider une feuille de temps !");
@@ -76,8 +80,9 @@ public class TimesheetServiceImpl implements ITimesheetService {
 			}
 			//verifier s'il est le chef de departement de la mission en question
 			boolean chefDeLaMission = false;
-			if (missionRepository.findById(missionId).isPresent()){
-				Mission mission = missionRepository.findById(missionId).get();
+			Optional<Mission> oppMission= missionRepository.findById(missionId);
+			if (oppMission.isPresent()){
+				Mission mission = oppMission.get();
 				for(Departement dep : validateur.getDepartements()){
 				if(dep.getId() == mission.getDepartement().getId()){
 					chefDeLaMission = true;
