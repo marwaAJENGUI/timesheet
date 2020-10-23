@@ -78,7 +78,7 @@ public class ControllerEmployeImpl  {
 	public String addEmploye() {
 
 		if (authenticatedUser==null || !loggedIn) return "/login.xhtml?faces-redirect=true";
-
+		
 		employeService.addOrUpdateEmploye(new Employe(nom, prenom, email, password, actif, role)); 
 		return "null"; 
 	}  
