@@ -2,6 +2,8 @@ package tn.esprit.spring.dto;
 
 import java.util.Date;
 
+import tn.esprit.spring.entities.Employe;
+
 public class ContratDTO {
 	private int reference;
 	
@@ -11,7 +13,7 @@ public class ContratDTO {
 	
 	private float telephone;
 
-	private EmployeDTO employe;
+	private Employe employe;
 
 	private float salaire;
 
@@ -58,11 +60,11 @@ public class ContratDTO {
 		this.salaire = salaire;
 	}
 
-	public EmployeDTO getEmploye() {
+	public Employe getEmploye() {
 		return employe;
 	}
 
-	public void setEmploye(EmployeDTO employe) {
+	public void setEmploye(Employe employe) {
 		this.employe = employe;
 	}
 	

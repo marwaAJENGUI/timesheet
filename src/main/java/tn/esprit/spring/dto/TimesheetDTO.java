@@ -1,12 +1,16 @@
 package tn.esprit.spring.dto;
 
+import tn.esprit.spring.entities.Employe;
+import tn.esprit.spring.entities.Mission;
+import tn.esprit.spring.entities.TimesheetPK;
+
 public class TimesheetDTO{
 
-	private TimesheetPKDTO timesheetPK;
+	private TimesheetPK timesheetPK;
 	
-	private MissionDTO mission;
+	private Mission mission;
 	
-	private EmployeDTO employe;
+	private Employe employe;
 	
 	
 	private boolean isValide;
@@ -20,27 +24,27 @@ public class TimesheetDTO{
 		this.isValide = isValide;
 	}
 
-	public TimesheetPKDTO getTimesheetPK() {
+	public TimesheetPK getTimesheetPK() {
 		return timesheetPK;
 	}
 
-	public void setTimesheetPK(TimesheetPKDTO timesheetPK) {
+	public void setTimesheetPK(TimesheetPK timesheetPK) {
 		this.timesheetPK = timesheetPK;
 	}
 
-	public MissionDTO getMission() {
+	public Mission getMission() {
 		return mission;
 	}
 
-	public void setMission(MissionDTO mission) {
+	public void setMission(Mission mission) {
 		this.mission = mission;
 	}
 
-	public EmployeDTO getEmploye() {
+	public Employe getEmploye() {
 		return employe;
 	}
 
-	public void setEmploye(EmployeDTO employe) {
+	public void setEmploye(Employe employe) {
 		this.employe = employe;
 	}
 

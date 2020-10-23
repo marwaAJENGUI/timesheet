@@ -1,7 +1,10 @@
 package tn.esprit.spring.dto;
 import java.util.List;
 
+import tn.esprit.spring.entities.Contrat;
+import tn.esprit.spring.entities.Departement;
 import tn.esprit.spring.entities.Role;
+import tn.esprit.spring.entities.Timesheet;
 
 
 public class EmployeDTO {
@@ -22,11 +25,11 @@ public class EmployeDTO {
 	private Role role;
 	
 	
-	private List<DepartementDTO> departements;
+	private List<Departement> departements;
 	
-	private ContratDTO contrat;
+	private Contrat contrat;
 	
-	private List<TimesheetDTO> timesheets;
+	private List<Timesheet> timesheets;
 	
 	
 	public EmployeDTO() {
@@ -125,27 +128,27 @@ public class EmployeDTO {
 		this.role = role;
 	}
 
-	public List<DepartementDTO> getDepartements() {
+	public List<Departement> getDepartements() {
 		return departements;
 	}
 
-	public void setDepartements(List<DepartementDTO> departement) {
+	public void setDepartements(List<Departement> departement) {
 		this.departements = departement;
 	}
 
-	public ContratDTO getContrat() {
+	public Contrat getContrat() {
 		return contrat;
 	}
 
-	public void setContrat(ContratDTO contrat) {
+	public void setContrat(Contrat contrat) {
 		this.contrat = contrat;
 	}
 
-	public List<TimesheetDTO> getTimesheets() {
+	public List<Timesheet> getTimesheets() {
 		return timesheets;
 	}
 
-	public void setTimesheets(List<TimesheetDTO> timesheets) {
+	public void setTimesheets(List<Timesheet> timesheets) {
 		this.timesheets = timesheets;
 	}
 

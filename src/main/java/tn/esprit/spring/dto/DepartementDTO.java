@@ -2,17 +2,21 @@ package tn.esprit.spring.dto;
 
 import java.util.List;
 
+import tn.esprit.spring.entities.Employe;
+import tn.esprit.spring.entities.Entreprise;
+import tn.esprit.spring.entities.Mission;
+
 public class DepartementDTO  {
 
 	private int id;
 	
 	private String name;
 
-	private List<EmployeDTO> employes;
+	private List<Employe> employes;
 	
-	private List<MissionDTO> missions;
+	private List<Mission> missions;
 	
-	private EntrepriseDTO entreprise;
+	private Entreprise entreprise;
 
 	public DepartementDTO() {
 		super();
@@ -38,27 +42,27 @@ public class DepartementDTO  {
 		this.name = name;
 	}
 
-	public List<EmployeDTO> getEmployes() {
+	public List<Employe> getEmployes() {
 		return employes;
 	}
 
-	public void setEmployes(List<EmployeDTO> employes) {
+	public void setEmployes(List<Employe> employes) {
 		this.employes = employes;
 	}
 
-	public List<MissionDTO> getMissions() {
+	public List<Mission> getMissions() {
 		return missions;
 	}
 
-	public void setMissions(List<MissionDTO> missions) {
+	public void setMissions(List<Mission> missions) {
 		this.missions = missions;
 	}
 
-	public EntrepriseDTO getEntreprise() {
+	public Entreprise getEntreprise() {
 		return entreprise;
 	}
 
-	public void setEntreprise(EntrepriseDTO entreprise) {
+	public void setEntreprise(Entreprise entreprise) {
 		this.entreprise = entreprise;
 	}
 	
