@@ -25,7 +25,7 @@ public class InvocationTrace implements Ordered{
         + joinpoint.getSignature().getName();
 
     final Object[] args = joinpoint.getArgs();
-    final StringBuffer sb = new StringBuffer();
+    final StringBuilder sb = new StringBuilder();
     sb.append(joinpoint.getSignature().toString());
     sb.append(" with parameters : (");
 
