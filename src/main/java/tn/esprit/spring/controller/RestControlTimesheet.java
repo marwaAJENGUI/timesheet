@@ -1,5 +1,7 @@
 package tn.esprit.spring.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -50,13 +52,17 @@ public class RestControlTimesheet {
 	// http://localhost:8081/SpringMVC/servlet/ajouterTimesheet/1/1/03-10-2020/03-20-2020
 	@PostMapping("/ajouterTimesheet/{idmission}/{idemp}/{dated}/{datef}")
 	@ResponseBody
-	public void ajouterTimesheet(@PathVariable("idmission") int missionId, @PathVariable("idemp") int employeId, @PathVariable("dated") Date dateDebut,@PathVariable("datef") Date dateFin) {
+	public void ajouterTimesheet(@PathVariable("idmission") int missionId, @PathVariable("idemp") int employeId, @PathVariable("dated") String strDateDebut,@PathVariable("datef") String strDateFin) throws ParseException {
+	    Date dateDebut=new SimpleDateFormat("dd-mm-yyyy").parse(strDateDebut);  
+	    Date dateFin=new SimpleDateFormat("dd-mm-yyyy").parse(strDateFin);  
 		itimesheetservice.ajouterTimesheet(missionId, employeId, dateDebut, dateFin);
 	}
 
 	// http://localhost:8081/SpringMVC/servlet/validerTimesheet/1/1/03-10-2020/03-20-2020/1
 	@PutMapping(value = "/validerTimesheet/{idmission}/{idemp}/{dated}/{datef}/{idval}") 
-	public void validerTimesheet(@PathVariable("idmission") int missionId, @PathVariable("idemp") int employeId, @PathVariable("dated") Date dateDebut,@PathVariable("datef") Date dateFin, @PathVariable("idval") int validateurId) {
+	public void validerTimesheet(@PathVariable("idmission") int missionId, @PathVariable("idemp") int employeId, @PathVariable("dated") String strDateDebut,@PathVariable("datef") String strDateFin, @PathVariable("idval") int validateurId) throws ParseException {
+	    Date dateDebut=new SimpleDateFormat("dd-mm-yyyy").parse(strDateDebut);  
+	    Date dateFin=new SimpleDateFormat("dd-mm-yyyy").parse(strDateFin);  
 		itimesheetservice.validerTimesheet(missionId, employeId, dateDebut, dateFin, validateurId);
 	}
 	
