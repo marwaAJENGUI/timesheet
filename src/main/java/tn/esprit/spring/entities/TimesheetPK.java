@@ -7,6 +7,8 @@ import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Embeddable
 public class TimesheetPK implements Serializable {
 
@@ -18,9 +20,11 @@ public class TimesheetPK implements Serializable {
 	
 	//Choisir le TemporalType selon le besoin metier
 	@Temporal(TemporalType.DATE)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
 	private Date dateDebut;
 	
 	@Temporal(TemporalType.DATE)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
 	private Date dateFin;
 	
 
@@ -108,5 +112,6 @@ public class TimesheetPK implements Serializable {
 	public int getIdMission() {
 		return idMission;
 	}
+
 
 }

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,6 +14,10 @@ import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+/**
+ * @author Marwa
+ *
+ */
 @Entity
 @JsonIdentityInfo(
 		  generator = ObjectIdGenerators.PropertyGenerator.class, 
@@ -32,7 +37,7 @@ public class Mission implements Serializable {
 	@ManyToOne
 	private Departement departement;
 	
-	@OneToMany(mappedBy="mission")
+	@OneToMany(mappedBy="mission",fetch = FetchType.EAGER)
 	private  List<Timesheet> timesheets;
 	
 	public Mission() {
@@ -84,6 +89,8 @@ public class Mission implements Serializable {
 	public void setTimesheets(List<Timesheet> timesheets) {
 		this.timesheets = timesheets;
 	}
+
+
 	
 	
 
