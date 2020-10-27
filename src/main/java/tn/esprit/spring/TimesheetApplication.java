@@ -1,10 +1,13 @@
 package tn.esprit.spring;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+
+import tn.esprit.spring.services.DepartementServiceImpl;
 
 @SpringBootApplication
 @EnableAutoConfiguration
@@ -13,8 +16,12 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 public class TimesheetApplication {
 
+	@Autowired
+	static DepartementServiceImpl departementServiceImpl;
 	public static void main(String[] args) {
 		SpringApplication.run(TimesheetApplication.class, args);
+		
+		System.out.println(departementServiceImpl.getAllDepartements());
 		}
 
 	

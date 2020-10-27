@@ -15,7 +15,7 @@ public class DepartementServiceImpl implements IDepartementService {
 	@Autowired
 	DepartementRepository deptRepoistory;
 
-
+	@Override
 	public List<Departement> getAllDepartements() {
 		return (List<Departement>) deptRepoistory.findAll();
 	}

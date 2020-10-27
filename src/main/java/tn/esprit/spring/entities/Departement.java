@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 		  property = "id")
 public class Departement implements Serializable {
 
-	private static final long serialVersionUID = -357738161698377833L;
+		private static final long serialVersionUID = -357738161698377833L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -89,6 +89,52 @@ public class Departement implements Serializable {
 		this.entreprise = entreprise;
 	}
 	
-	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((employes == null) ? 0 : employes.hashCode());
+		result = prime * result + ((entreprise == null) ? 0 : entreprise.hashCode());
+		result = prime * result + id;
+		result = prime * result + ((missions == null) ? 0 : missions.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Departement other = (Departement) obj;
+		if (employes == null) {
+			if (other.employes != null)
+				return false;
+		} else if (!employes.equals(other.employes))
+			return false;
+		if (entreprise == null) {
+			if (other.entreprise != null)
+				return false;
+		} else if (!entreprise.equals(other.entreprise))
+			return false;
+		if (id != other.id)
+			return false;
+		if (missions == null) {
+			if (other.missions != null)
+				return false;
+		} else if (!missions.equals(other.missions))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
+
+
 
 }
