@@ -6,6 +6,7 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
+import org.apache.log4j.Logger;
 import org.ocpsoft.rewrite.annotation.Join;
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,108 +21,161 @@ import tn.esprit.spring.entities.Role;
 import tn.esprit.spring.entities.Timesheet;
 import tn.esprit.spring.services.IEmployeService;
 
-
 @Scope(value = "session")
 @Controller(value = "employeController")
 @ELBeanName(value = "employeController")
 @Join(path = "/", to = "/login.jsf")
-public class ControllerEmployeImpl  {
+public class ControllerEmployeImpl {
 
 	@Autowired
 	IEmployeService employeService;
 
-	private String login; 
-	private String password; 
+	private static final Logger logger = Logger.getLogger(ControllerEmployeImpl.class);
+
+	private String login;
+	private String password;
 	private Boolean loggedIn;
 
-	private Employe authenticatedUser = null; 
-	private String prenom; 
-	private String nom; 
+	private Employe authenticatedUser = null;
+	private String prenom;
+	private String nom;
 	private String email;
 	private boolean actif;
-	private Role role;  
-	public Role[] getRoles() { return Role.values(); }
+	private Role role;
 
-	private List<Employe> employes; 
+	public Role[] getRoles() {
+		return Role.values();
+	}
+
+	private List<Employe> employes;
 
 	private Integer employeIdToBeUpdated; // getter et setter
 
-
 	public String doLogin() {
+		logger.debug("entering doLogin()...");
+		try {
+			String navigateTo = "null";
+			logger.debug("getting user info...");
+			authenticatedUser = employeService.authenticate(login, password);
+			logger.debug("Authenticating user: " + login + "/" + password);
+			if (authenticatedUser != null && authenticatedUser.getRole() == Role.ADMINISTRATEUR) {
+				logger.debug("used Authenticated!");
+				navigateTo = "/pages/admin/welcome.xhtml?faces-redirect=true";
+				loggedIn = true;
+			}
 
-		String navigateTo = "null";
-		authenticatedUser=employeService.authenticate(login, password);
-		if (authenticatedUser != null && authenticatedUser.getRole() == Role.ADMINISTRATEUR) {
-			navigateTo = "/pages/admin/welcome.xhtml?faces-redirect=true";
-			loggedIn = true;
-		}		
-
-		else
-		{
-			
-			FacesMessage facesMessage =
-					new FacesMessage("Login Failed: Please check your username/password and try again.");
-			FacesContext.getCurrentInstance().addMessage("form:btn",facesMessage);
+			else {
+				logger.debug("Authentication failed of user " + login + "/" + password + " failed");
+				FacesMessage facesMessage = new FacesMessage(
+						"Login Failed: Please check your username/password and try again.");
+				FacesContext.getCurrentInstance().addMessage("form:btn", facesMessage);
+			}
+			logger.warn("exiting doLogin() with failed authentication...");
+			return navigateTo;
+		} catch (NullPointerException e) {
+			logger.error("exiting doLogin() with Null pointer exception error");
+			return "null";
 		}
-		return navigateTo;	
 	}
 
-	public String doLogout()
-	{
-		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-	
-	return "/login.xhtml?faces-redirect=true";
+	public String doLogout() {
+		logger.debug("entering doLogout()...");
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+			logger.debug("logging out...");
+			logger.debug("exiting doLogout()");
+			return "/login.xhtml?faces-redirect=true";
+		} catch (NullPointerException e) {
+			logger.error("exiting doLogout() with Null pointer exception error");
+			return "null";
+		}
 	}
-
 
 	public String addEmploye() {
-
-		if (authenticatedUser==null || !loggedIn) return "/login.xhtml?faces-redirect=true";
-		
-		employeService.addOrUpdateEmploye(new Employe(nom, prenom, email, password, actif, role)); 
-		return "null"; 
-	}  
+		logger.debug("entering addEmploye()...");
+		try {
+			Employe employe = new Employe(nom, prenom, email, password, actif, role);
+			if (authenticatedUser == null || !loggedIn) {
+				logger.error("exiting addEmploye() after failed authentication...");
+				return "/login.xhtml?faces-redirect=true";
+			}
+			logger.debug("adding employe " + employe);
+			employeService.addOrUpdateEmploye(employe);
+			logger.debug("employe added, exiting addEmploye()...");
+			return "null";
+		} catch (NullPointerException e) {
+			logger.error("exiting addEmploye() with Null pointer exception error");
+			return "null";
+		}
+	}
 
 	public String removeEmploye(int employeId) {
-		String navigateTo = "null";
-		if (authenticatedUser==null || !loggedIn) return "/login.xhtml?faces-redirect=true";
+		logger.debug("entering removeEmploye()...");
+		try {
+			String navigateTo = "null";
+			if (authenticatedUser == null || !loggedIn) {
+				logger.error("exiting removeEmploye() after failed authentication...");
+				return "/login.xhtml?faces-redirect=true";
+			}
 
-		employeService.deleteEmployeById(employeId);
-		return navigateTo; 
-	} 
+			logger.debug("deleting employe " + employeService.getEmployePrenomById(employeId));
+			employeService.deleteEmployeById(employeId);
+			logger.debug("employe deleted, exiting removeEmploye()...");
+			return navigateTo;
+		} catch (NullPointerException e) {
+			logger.error("exiting removeEmploye() with Null pointer exception error");
+			return "null";
+		}
+	}
 
-	public String displayEmploye(Employe empl) 
-	{
-		String navigateTo = "null";
-		if (authenticatedUser==null || !loggedIn) return "/login.xhtml?faces-redirect=true";
+	public String displayEmploye(Employe empl) {
+		logger.debug("entering diplayEmploye()...");
+		try {
+			String navigateTo = "null";
+			if (authenticatedUser == null || !loggedIn) {
+				logger.error("exiting displayEmploye() after failed authentication...");
+				return "/login.xhtml?faces-redirect=true";
+			}
 
+			logger.debug("displaying employe " + empl);
+			this.setPrenom(empl.getPrenom());
+			this.setNom(empl.getNom());
+			this.setActif(empl.isActif());
+			this.setEmail(empl.getEmail());
+			this.setRole(empl.getRole());
+			this.setPassword(empl.getPassword());
+			this.setEmployeIdToBeUpdated(empl.getId());
 
-		this.setPrenom(empl.getPrenom());
-		this.setNom(empl.getNom());
-		this.setActif(empl.isActif()); 
-		this.setEmail(empl.getEmail());
-		this.setRole(empl.getRole());
-		this.setPassword(empl.getPassword());
-		this.setEmployeIdToBeUpdated(empl.getId());
+			logger.debug("exiting displayEmploye()");
+			return navigateTo;
+		} catch (NullPointerException e) {
+			logger.error("exiting displayEmploye() Null pointer exception error");
+			return "null";
+		}
+	}
 
-		return navigateTo; 
+	public String updateEmploye() {
+		logger.debug("entering updateEmploye()...");
+		try {
+			String navigateTo = "null";
+			Employe employe = new Employe(employeIdToBeUpdated, nom, prenom, email, password, actif, role);
 
-	} 
+			if (authenticatedUser == null || !loggedIn) {
+				logger.error("exiting updateEmploye() after failed authentication...");
+				return "/login.xhtml?faces-redirect=true";
+			}
 
-	public String updateEmploye() 
-	{ 
-		String navigateTo = "null";
-		
-		if (authenticatedUser==null || !loggedIn) return "/login.xhtml?faces-redirect=true";
+			logger.debug("updating employe to " + employe);
+			employeService.addOrUpdateEmploye(employe);
+			logger.debug("Employe updated, exiting updateEmploye()");
+			return navigateTo;
+		} catch (NullPointerException e) {
+			logger.error("exiting updateEmploye() Null pointer exception error");
+			return "null";
+		}
+	}
 
-		employeService.addOrUpdateEmploye(new Employe(employeIdToBeUpdated, nom, prenom, email, password, actif, role)); 
-
-		return navigateTo; 
-
-	} 
-
-
-	// getters and setters 
+	// getters and setters
 
 	public IEmployeService getEmployeService() {
 		return employeService;
@@ -147,7 +201,6 @@ public class ControllerEmployeImpl  {
 		this.password = password;
 	}
 
-
 	public List<Employe> getAllEmployes() {
 		return employeService.getAllEmployes();
 	}
@@ -160,8 +213,7 @@ public class ControllerEmployeImpl  {
 		this.loggedIn = loggedIn;
 	}
 
-	public int ajouterEmploye(Employe employe)
-	{
+	public int ajouterEmploye(Employe employe) {
 		employeService.addOrUpdateEmploye(employe);
 		return employe.getId();
 	}
@@ -176,10 +228,7 @@ public class ControllerEmployeImpl  {
 
 	}
 
-
-
-	public void desaffecterEmployeDuDepartement(int employeId, int depId)
-	{
+	public void desaffecterEmployeDuDepartement(int employeId, int depId) {
 		employeService.desaffecterEmployeDuDepartement(employeId, depId);
 	}
 
@@ -188,11 +237,9 @@ public class ControllerEmployeImpl  {
 		return contrat.getReference();
 	}
 
-	public void affecterContratAEmploye(int contratId, int employeId)
-	{
+	public void affecterContratAEmploye(int contratId, int employeId) {
 		employeService.affecterContratAEmploye(contratId, employeId);
 	}
-
 
 	public String getEmployePrenomById(int employeId) {
 		return employeService.getEmployePrenomById(employeId);
@@ -202,6 +249,7 @@ public class ControllerEmployeImpl  {
 		employeService.deleteEmployeById(employeId);
 
 	}
+
 	public void deleteContratById(int contratId) {
 		employeService.deleteContratById(contratId);
 	}
@@ -220,7 +268,7 @@ public class ControllerEmployeImpl  {
 		return employeService.getAllEmployeByEntreprise(entreprise);
 	}
 
-	public void mettreAjourEmailByEmployeIdJPQL(String email, int employeId) {	
+	public void mettreAjourEmailByEmployeIdJPQL(String email, int employeId) {
 		employeService.mettreAjourEmailByEmployeIdJPQL(email, employeId);
 
 	}
@@ -233,7 +281,6 @@ public class ControllerEmployeImpl  {
 	public float getSalaireByEmployeIdJPQL(int employeId) {
 		return employeService.getSalaireByEmployeIdJPQL(employeId);
 	}
-
 
 	public Double getSalaireMoyenByDepartementId(int departementId) {
 		return employeService.getSalaireMoyenByDepartementId(departementId);
@@ -268,9 +315,6 @@ public class ControllerEmployeImpl  {
 		this.email = email;
 	}
 
-
-
-
 	public boolean isActif() {
 		return actif;
 	}
@@ -288,7 +332,7 @@ public class ControllerEmployeImpl  {
 	}
 
 	public List<Employe> getEmployes() {
-		employes = employeService.getAllEmployes(); 
+		employes = employeService.getAllEmployes();
 		return employes;
 	}
 
