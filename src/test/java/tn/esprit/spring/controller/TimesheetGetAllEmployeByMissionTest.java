@@ -1,4 +1,4 @@
-package tn.esprit.spring.services;
+package tn.esprit.spring.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
