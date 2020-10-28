@@ -73,6 +73,7 @@ public class TimesheetServiceImpl implements ITimesheetService {
 		Optional<Employe> oppEmploye= employeRepository.findById(validateurId);
 		if(oppEmploye.isPresent()) {
 			Employe validateur = oppEmploye.get();
+			log.info("role validateur = "+validateur.getRole());
 			//verifier s'il est un chef de departement (interet des enum)
 			if(!validateur.getRole().equals(Role.CHEF_DEPARTEMENT)){
 				log.info("l'employe doit etre chef de departement pour valider une feuille de temps !");
@@ -86,6 +87,7 @@ public class TimesheetServiceImpl implements ITimesheetService {
 				for(Departement dep : validateur.getDepartements()){
 				if(dep.getId() == mission.getDepartement().getId()){
 					chefDeLaMission = true;
+					log.info("pour departement:"+dep+"chef de la mission = "+chefDeLaMission);
 					break;
 				}
 			}
@@ -98,14 +100,19 @@ public class TimesheetServiceImpl implements ITimesheetService {
 		
 		TimesheetPK timesheetPK = new TimesheetPK(missionId, employeId, dateDebut, dateFin);
 		Timesheet timesheet =timesheetRepository.findBytimesheetPK(timesheetPK);
+		log.info("timesheet= "+timesheet);
 		timesheet.setValide(true);
-		
+		timesheetRepository.save(timesheet);
+		log.info("timesheet= "+timesheet);		
 		//Comment Lire une date de la base de données
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		log.info("dateDebut : " + dateFormat.format(timesheet.getTimesheetPK().getDateDebut()));
-		
 	}
 
+	@Override
+	public Timesheet findBytimesheetPK(TimesheetPK timesheetPK) {
+		return timesheetRepository.findBytimesheetPK(timesheetPK);
+	}
 	
 	public List<Mission> findAllMissionByEmployeJPQL(int employeId) {
 		return timesheetRepository.findAllMissionByEmployeJPQL(employeId);
