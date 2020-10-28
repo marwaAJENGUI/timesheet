@@ -31,7 +31,7 @@ public class RestControlTimesheet {
 	IEntrepriseService ientrepriseservice;
 	@Autowired
 	ITimesheetService itimesheetservice;
-	
+	static final String DATE_FORMAT="dd-mm-yyyy";
 	// http://localhost:8081/SpringMVC/servlet/ajouterMission
 	@PostMapping("/ajouterMission")
 	@ResponseBody
@@ -53,16 +53,16 @@ public class RestControlTimesheet {
 	@PostMapping("/ajouterTimesheet/{idmission}/{idemp}/{dated}/{datef}")
 	@ResponseBody
 	public void ajouterTimesheet(@PathVariable("idmission") int missionId, @PathVariable("idemp") int employeId, @PathVariable("dated") String strDateDebut,@PathVariable("datef") String strDateFin) throws ParseException {
-	    Date dateDebut=new SimpleDateFormat("dd-mm-yyyy").parse(strDateDebut);  
-	    Date dateFin=new SimpleDateFormat("dd-mm-yyyy").parse(strDateFin);  
+	    Date dateDebut=new SimpleDateFormat(DATE_FORMAT).parse(strDateDebut);  
+	    Date dateFin=new SimpleDateFormat(DATE_FORMAT).parse(strDateFin);  
 		itimesheetservice.ajouterTimesheet(missionId, employeId, dateDebut, dateFin);
 	}
 
 	// http://localhost:8081/SpringMVC/servlet/validerTimesheet/1/1/03-10-2020/03-20-2020/1
 	@PutMapping(value = "/validerTimesheet/{idmission}/{idemp}/{dated}/{datef}/{idval}") 
 	public void validerTimesheet(@PathVariable("idmission") int missionId, @PathVariable("idemp") int employeId, @PathVariable("dated") String strDateDebut,@PathVariable("datef") String strDateFin, @PathVariable("idval") int validateurId) throws ParseException {
-	    Date dateDebut=new SimpleDateFormat("dd-mm-yyyy").parse(strDateDebut);  
-	    Date dateFin=new SimpleDateFormat("dd-mm-yyyy").parse(strDateFin);  
+	    Date dateDebut=new SimpleDateFormat(DATE_FORMAT).parse(strDateDebut);  
+	    Date dateFin=new SimpleDateFormat(DATE_FORMAT).parse(strDateFin);  
 		itimesheetservice.validerTimesheet(missionId, employeId, dateDebut, dateFin, validateurId);
 	}
 	

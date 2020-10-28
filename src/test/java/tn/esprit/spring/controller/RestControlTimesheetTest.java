@@ -95,7 +95,6 @@ public class RestControlTimesheetTest {
 				String.class)).contains(json);
 	}
 	
-	
 	@Test
 	public void affecterMissionADepartementTest() {
 	    requestJson = "{}";
@@ -130,9 +129,9 @@ public class RestControlTimesheetTest {
 		
 	    String expectedJson = mapper.writeValueAsString(expected);
 		String actualJson = mapper.writeValueAsString(actual);
-	    assertEquals(expectedJson,actualJson);
-	    
+	    assertEquals(expectedJson,actualJson);    
 	}
+	
 	@Test
 	public void validerTimesheetTest() throws ParseException, JsonProcessingException{
 		
