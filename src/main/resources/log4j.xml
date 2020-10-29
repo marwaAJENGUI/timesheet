@@ -23,7 +23,7 @@
 		<param name="append" value="true" />
 		<param name="maxFileSize" value="2KB" />
 		<param name="maxBackupIndex" value="10" />
-		<param name="file" value="F:/log/timesheet/log.log" />
+		<param name="file" value="logs/log.log" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} [%-10p] %l:%L - %m%n" />
 		</layout>
