@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -10,7 +9,7 @@
 	</parent>
 	<groupId>tn.esprit.spring</groupId>
 	<artifactId>timesheet</artifactId>
-	<version>1.0.teamversion</version>
+	<version>1.0.116-SNAPSHOT</version>
 	<name>timesheet</name>
 	<description>timesheet</description>
 
@@ -20,8 +19,9 @@
 		<!-- Sonar -->
 	    <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
 	    <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-	    <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
+	    <sonar.jacoco.reportPath>${project.basedir}/target/jacoco.exec</sonar.jacoco.reportPath>
 	    <sonar.language>java</sonar.language>
+	    <sonar.host.url>http://localhost:9000</sonar.host.url>
 	</properties>
 
 	<dependencies>
@@ -173,8 +173,27 @@
 			        </execution>
 			    </executions>
 			</plugin>
+			  <plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-release-plugin</artifactId>
+			    <version>3.0.0-M1</version>
+			    <configuration>
+			      <!--
+			        During release:perform, enable the "release" profile
+			       -->
+			      	<releaseProfiles>release</releaseProfiles>
+			      	
+		          <tagNameFormat>v@{project.version}</tagNameFormat>
+			    </configuration>
+			  </plugin>
 		</plugins>
 	</build>
+	<scm>
+    <connection>scm:git:https://github.com/marwaAJENGUI/timesheet</connection>
+    <developerConnection>scm:git:https://github.com/marwaAJENGUI/timesheet</developerConnection>
+    <tag>HEAD</tag>
+    <url>http://127.0.0.1/websvn/my-project</url>
+  </scm>
 	<distributionManagement>
 		<snapshotRepository>
 	      <id>nexus-snapshots</id>
