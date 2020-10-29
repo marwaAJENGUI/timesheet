@@ -4,7 +4,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.apache.log4j.Logger;
@@ -14,13 +13,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import tn.esprit.spring.entities.Employe;
 import tn.esprit.spring.entities.Role;
@@ -121,7 +117,7 @@ public class ControllerEmployeImplTest {
 	@Test
 	public void removeEmployeTest() {
 		logger.debug("entering removeEmploye()...");
-		int employeId=0;
+		int employeId=2;
 		try {
 			logger.debug("deleting employe " + employeService.getEmployePrenomById(employeId));
 			employeService.deleteEmployeById(employeId);
@@ -145,5 +141,6 @@ public class ControllerEmployeImplTest {
 			logger.error("exiting updateEmployeTest() with " + e + " error");
 		}
 	}
+	
 
 }
