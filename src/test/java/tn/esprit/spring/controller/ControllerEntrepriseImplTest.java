@@ -89,9 +89,8 @@ public class ControllerEntrepriseImplTest {
 		logger.debug("Liste des departement de l'entreprise 1:"+depNames);
 		
 		List<String> testlist= new ArrayList<String>();
-		testlist.add("name");
-		testlist.add("name");
-		testlist.add("name 2");
+		testlist.add("Telecom");
+		testlist.add("RH");
 		assertEquals(testlist,depNames);
 		logger.debug("Succes");
 	}
