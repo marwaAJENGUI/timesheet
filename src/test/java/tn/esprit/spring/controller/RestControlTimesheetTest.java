@@ -7,7 +7,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,6 +35,8 @@ import tn.esprit.spring.entities.Mission;
 import tn.esprit.spring.entities.Role;
 import tn.esprit.spring.entities.Timesheet;
 import tn.esprit.spring.entities.TimesheetPK;
+import tn.esprit.spring.repository.EmployeRepository;
+import tn.esprit.spring.repository.MissionRepository;
 import tn.esprit.spring.services.ITimesheetService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -46,9 +50,13 @@ public class RestControlTimesheetTest {
 	private TestRestTemplate restTemplate;
 	@Autowired
 	ITimesheetService itimesheetservice;
+	@Autowired
+	MissionRepository missionRepository;
+	@Autowired
+	EmployeRepository employeRepository;
 	static ObjectMapper mapper;
 	static int employeId;
-	static int idmission;
+	int idmission;
 	static int departementId;
 	static String requestJson;
 	static HttpHeaders headers;
@@ -58,17 +66,17 @@ public class RestControlTimesheetTest {
 	 @BeforeClass
 	 public static void setUp() {
 		mapper = new ObjectMapper();
-		idmission=10;
-		employeId=1;
-		departementId=1;
+		employeId=3;
+		departementId=2;
 		headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);
 	    strDateDebut="28-10-2020";
 	    strDateFin="03-11-2020";
 	}
-
+	 
 	 @Test
 	 public void getAllEmployeByMissionTest() throws JsonProcessingException {
+		this.setIdmission(14);
 		List<Employe> employeesList = itimesheetservice.getAllEmployeByMission(idmission);
 		System.out.println(employeesList);
 		System.out.println(idmission);
@@ -80,7 +88,7 @@ public class RestControlTimesheetTest {
 	@Test
 	public void ajouterMissionTest() {
 		MissionDTO mission  = new MissionDTO();
-		mission.setId(idmission);
+		this.setIdmission(findLastIdMission()+ 1);
 		mission.setName("mission Test "+ idmission);
 		mission.setDescription("test ajouter mission");
 		assertThat(this.restTemplate.postForObject("http://localhost:" + port + "/SpringMVC/servlet/ajouterMission",mission,
@@ -107,10 +115,11 @@ public class RestControlTimesheetTest {
 	}
 	
 	@Test
-	public void ajouterTimesheet() throws ParseException, JsonProcessingException {
-	    requestJson = "{}";
+	public void ajouterTimesheetTest() throws ParseException, JsonProcessingException {
+		this.setIdmission(findLastIdMission());
+		requestJson = "{}";
 	    ResponseEntity<String> entity = new TestRestTemplate().exchange(
-	            "http://localhost:" + this.port + "/SpringMVC/servlet/ajouterTimesheet/"+idmission+"/"+departementId+"/"+strDateDebut+"/"+strDateFin, HttpMethod.POST,
+	            "http://localhost:" + this.port + "/SpringMVC/servlet/ajouterTimesheet/"+idmission+"/"+employeId+"/"+strDateDebut+"/"+strDateFin, HttpMethod.POST,
 	            new HttpEntity<String>(requestJson,headers),
 	            String.class);
 	    assertEquals(HttpStatus.OK, entity.getStatusCode());
@@ -123,6 +132,10 @@ public class RestControlTimesheetTest {
 	    if (expected==null) {
 	    	expected = new Timesheet();
 		    expected.setTimesheetPK(timesheetPK);
+		    Optional <Mission> opMission = missionRepository.findById(idmission);
+			expected.setMission(opMission.get());
+			Optional <Employe> opEmploye = employeRepository.findById(employeId);	
+			expected.setEmploye(opEmploye.get());
 		    expected.setValide(false);
 	    } 
 	    Timesheet actual =itimesheetservice.findBytimesheetPK(timesheetPK);
@@ -131,10 +144,21 @@ public class RestControlTimesheetTest {
 		String actualJson = mapper.writeValueAsString(actual);
 	    assertEquals(expectedJson,actualJson);    
 	}
+
+	@Test
+	public void ajouterTimesheet_INTERNAL_SERVER_ERROR_Test() {
+	    requestJson = "{}";
+	    ResponseEntity<String> entity = new TestRestTemplate().exchange(
+	            "http://localhost:" + this.port + "/SpringMVC/servlet/ajouterTimesheet/"+(idmission+1)+"/"+employeId+"/"+strDateDebut+"/"+strDateFin, HttpMethod.POST,
+	            new HttpEntity<String>(requestJson,headers),
+	            String.class);
+	    assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, entity.getStatusCode());
+
+	}
 	
 	@Test
 	public void validerTimesheetTest() throws ParseException, JsonProcessingException{
-		
+		this.setIdmission(14);
 		Date dateDebut=new SimpleDateFormat("dd-mm-yyyy").parse(strDateDebut);  
 	    Date dateFin=new SimpleDateFormat("dd-mm-yyyy").parse(strDateFin);  
 	    TimesheetPK timesheetPK = new TimesheetPK(idmission, employeId, dateDebut, dateFin);
@@ -143,7 +167,7 @@ public class RestControlTimesheetTest {
 	    
 	    requestJson = "{}";	   
 		ResponseEntity<String> entity = new TestRestTemplate().exchange(
-	            "http://localhost:" + this.port + "/SpringMVC/servlet/validerTimesheet/"+idmission+"/"+departementId+"/"+strDateDebut+"/"+strDateFin+"/"+employeId, HttpMethod.PUT,
+	            "http://localhost:" + this.port + "/SpringMVC/servlet/validerTimesheet/"+idmission+"/"+employeId+"/"+strDateDebut+"/"+strDateFin+"/"+employeId, HttpMethod.PUT,
 	            new HttpEntity<String>(requestJson,headers),
 	            String.class);
 	    assertEquals(HttpStatus.OK, entity.getStatusCode());
@@ -154,6 +178,19 @@ public class RestControlTimesheetTest {
 		String actualJson = mapper.writeValueAsString(actual);
 	    assertEquals(expectedJson,actualJson);
 
+	}
+
+	public int getIdmission() {
+		return idmission;
+	}
+
+	public void setIdmission(int idmission) {
+		this.idmission = idmission;
+	}
+	
+	public int findLastIdMission() {
+		List <Mission> missionList=((List <Mission>)missionRepository.findAll());
+		return missionList.get(missionList.size()-1).getId();
 	}
 	
 

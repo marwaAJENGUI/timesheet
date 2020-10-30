@@ -23,8 +23,7 @@ public class DepartementServiceImplTest{
 	
 	@Test
 	public void getAllDepartementsTest() {
-		assertEquals(1,((List<Departement>)deptRepoistory.findAll()).size());	
-		assertEquals(1,deptService.getAllDepartements().size());	
+		assertEquals(((List<Departement>)deptRepoistory.findAll()).size(),deptService.getAllDepartements().size());	
 	}
 	
 	

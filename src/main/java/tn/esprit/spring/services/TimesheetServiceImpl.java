@@ -62,8 +62,17 @@ public class TimesheetServiceImpl implements ITimesheetService {
 		
 		Timesheet timesheet = new Timesheet();
 		timesheet.setTimesheetPK(timesheetPK);
+		Optional <Mission> opMission = missionRepository.findById(missionId);
+		if (opMission.isPresent()) {
+			timesheet.setMission(opMission.get());
+		}else throw new IllegalArgumentException("Invalide mission Id: mission does not exist");
+		Optional <Employe> opEmploye = employeRepository.findById(employeId);	
+		if (opEmploye.isPresent()) {
+			timesheet.setEmploye(opEmploye.get());
+		}else throw new IllegalArgumentException("Invalide employe Id: employee does not exist");			
 		timesheet.setValide(false); //par defaut non valide
 		timesheetRepository.save(timesheet);
+		
 		
 	}
 
