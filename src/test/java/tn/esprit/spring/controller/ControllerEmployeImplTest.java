@@ -125,13 +125,13 @@ public class ControllerEmployeImplTest {
 	}
 	
 	@Test
-	public void updateEmploye() {
-		logger.info("entering updateEmploye()...");
+	public void updateEmployeTest() {
+		logger.info("entering updateEmployeTest()...");
 		try {
 			Employe employe = new Employe(employeIdToBeUpdated, nom, prenom, email, password, actif, role);
 
 			logger.debug("updating employe to " + employe);
-			assertEquals(employe, employeService.addOrUpdateEmploye(employe));
+			assertEquals(employeIdToBeUpdated, employeService.addOrUpdateEmploye(employe));
 			logger.info("Employe updated, exiting updateEmploye()");
 		} catch (Exception e) {
 			logger.error("exiting updateEmployeTest() with " + e);
