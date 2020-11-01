@@ -54,15 +54,11 @@ public class ControllerEmployeImplTest {
 	public static void setUp() {
 		login = "Khaled.kallel@ssiiconsulting.tn";
 		password = "aaa";
-		headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		strDateDebut = "28-10-2020";
-		strDateFin = "03-11-2020";
 	}
 
 	@Test
 	public void doLoginTest() {
-		logger.debug("entering doLoginTest()...");
+		logger.info("entering doLoginTest()...");
 		try {
 			String navigateTo = "null";
 			logger.debug("getting user info...");
@@ -81,20 +77,21 @@ public class ControllerEmployeImplTest {
 
 			assertEquals(navigateTo, "/pages/admin/welcome.xhtml?faces-redirect=true");
 			assertTrue(loggedIn);
+			logger.info("exiting doLoginTest()...");
 		} catch (Exception e) {
-			logger.error("exiting doLogin() with " + e);
+			logger.error("exiting doLoginTest() with " + e);
 		}
 	}
 
 	@Test
 	public void doLogoutTest() {
-		logger.debug("entering doLogoutTest()...");
+		logger.info("entering doLogoutTest()...");
 		try {
 			FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 			logger.debug("logging out...");
-			logger.debug("exiting doLogout()");
 			String result = "/login.xhtml?faces-redirect=true";
 			assertEquals(result, "/login.xhtml?faces-redirect=true");
+			logger.info("exiting doLogout()");
 		} catch (Exception e) {
 			logger.error("exiting doLogoutTest() with " + e);
 		}
@@ -102,13 +99,13 @@ public class ControllerEmployeImplTest {
 
 	@Test
 	public void addEmployeTest() {
-		logger.debug("entering addEmploye()...");
+		logger.info("entering addEmploye()...");
 		try {
 			Employe employe = new Employe(nom, prenom, login, password, actif, role);
 			logger.debug("adding employe " + employe);
 			String addedEmployePrenom = employeService.getEmployePrenomById(employeService.addOrUpdateEmploye(employe));
-			logger.debug("employe added, exiting addEmploye()...");
 			assertEquals(addedEmployePrenom, employe.getPrenom());
+			logger.info("employe added, exiting addEmploye()...");
 		} catch (Exception e) {
 			logger.error("exiting addEmployeTest() with " + e);
 		}
@@ -116,26 +113,26 @@ public class ControllerEmployeImplTest {
 	
 	@Test
 	public void removeEmployeTest() {
-		logger.debug("entering removeEmploye()...");
+		logger.info("entering removeEmploye()...");
 		int employeId=3;
 		try {
 			logger.debug("deleting employe " + employeService.getEmployePrenomById(employeId));
 			employeService.deleteEmployeById(employeId);
-			logger.debug("employe deleted, exiting removeEmploye()...");
+			logger.info("employe deleted, exiting removeEmploye()...");
 		} catch (Exception e) {
 			logger.error("exiting removeEmployeTest() with " + e);
 		}
 	}
 	
 	@Test
-	public void updateEmploye() {
-		logger.debug("entering updateEmploye()...");
+	public void updateEmployeTest() {
+		logger.info("entering updateEmployeTest()...");
 		try {
 			Employe employe = new Employe(employeIdToBeUpdated, nom, prenom, email, password, actif, role);
 
 			logger.debug("updating employe to " + employe);
-			employeService.addOrUpdateEmploye(employe);
-			logger.debug("Employe updated, exiting updateEmploye()");
+			assertEquals(employeIdToBeUpdated, employeService.addOrUpdateEmploye(employe));
+			logger.info("Employe updated, exiting updateEmploye()");
 		} catch (Exception e) {
 			logger.error("exiting updateEmployeTest() with " + e);
 		}
