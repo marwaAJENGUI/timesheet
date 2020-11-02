@@ -30,6 +30,7 @@ public class MonitorPerformance implements Ordered {
   }
   
   @Pointcut("execution(* tn.esprit.spring.entities.Departement.*(..)) "
+			+ "|| execution(* tn.esprit.spring.services.DepartementServiceImpl.*(..)) "
 	  		+ "|| execution(* tn.esprit.spring.controller.RestControlTimesheet.*(..))")
 public void monitorPerfPointcut() {
 	  //Aspect pointcut

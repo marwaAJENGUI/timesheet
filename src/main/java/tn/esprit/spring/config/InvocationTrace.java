@@ -21,8 +21,10 @@ public class InvocationTrace implements Ordered {
 	@Around("execution(* tn.esprit.spring.entities.Departement.*(..)) "
 			+ "|| execution(* tn.esprit.spring.controller.RestControlTimesheet.*(..)) "
 			+ "|| execution(* tn.esprit.spring.services.TimesheetServiceImpl.*(..)) "
+			+ "|| execution(* tn.esprit.spring.services.DepartementServiceImpl.*(..)) "
 			+ "|| execution(* tn.esprit.spring.repository.TimesheetRepository.*(..)) "
-			+ "|| execution(* *Test(..))")
+			+ "|| execution(* test*(..))"
+			)
 	public Object methodTrace(final ProceedingJoinPoint joinpoint) throws Throwable {
 		String methodName = joinpoint.getTarget().getClass().getSimpleName() + "." + joinpoint.getSignature().getName();
 
