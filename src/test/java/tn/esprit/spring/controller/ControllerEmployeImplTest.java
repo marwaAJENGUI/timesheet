@@ -3,8 +3,6 @@ package tn.esprit.spring.controller;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.List;
-
 
 import org.apache.log4j.Logger;
 import org.junit.BeforeClass;
@@ -31,14 +29,10 @@ public class ControllerEmployeImplTest {
 
 	private static String login;
 	private static String password;
-	private Role role;
 	private Boolean loggedIn;
 
-	int employeIdToBeUpdated = 3;
+	int employeIdToBeUpdated = 2;
 	private Employe authenticatedUser = null;
-	private String prenom;
-	private String nom;
-	private String email;
 	private boolean actif;
 
 	static String requestJson;
@@ -128,7 +122,7 @@ public class ControllerEmployeImplTest {
 	@Test
 	public void updateEmployeTest() {
 		logger.info("entering updateEmployeTest()...");
-		Employe employe = new Employe(employeIdToBeUpdated, "ModifyTestNom", "ModifyTestPrenom", "Khaled.kallel@ssiiconsulting.tn", "aaa", actif, role);
+		Employe employe = new Employe(employeIdToBeUpdated, "ModifyTestNom", "ModifyTestPrenom", "test@lo.tn", "newpwd", actif, Role.INGENIEUR);
 		logger.debug("updating employe to " + employe);
 		assertEquals(employeIdToBeUpdated, employeService.addOrUpdateEmploye(employe));
 		logger.info("Employe updated, exiting updateEmploye()");
