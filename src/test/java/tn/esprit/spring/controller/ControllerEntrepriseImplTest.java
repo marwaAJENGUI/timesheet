@@ -90,8 +90,10 @@ public class ControllerEntrepriseImplTest {
 
 		List<Departement> listdep = (List<Departement>) deprepo.findAll();
 		sizeListD = listdep.size();
+		
+		if(sizeListD>=1) {
 
-		d = listdep.get(sizeListD - 1);
+		d = listdep.get(0);
 
 		logger.debug("affecting Departement (" + d.getId() + "," + d.getName() + ") to Entreprise (" + e.getId() + ","
 				+ e.getName() + ")...");
@@ -106,6 +108,10 @@ public class ControllerEntrepriseImplTest {
 		logger.info("Comparing fetched department's entreprise with the initial enterprise...");
 		assertEquals(d1.getEntreprise().getId(), e.getId());
 		logger.debug("Test successful.");
+		
+		}
+		else logger.info("Check database before proceding.");
+
 
 	}
 
