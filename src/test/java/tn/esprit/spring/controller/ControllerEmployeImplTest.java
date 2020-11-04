@@ -87,7 +87,7 @@ public class ControllerEmployeImplTest {
 	@Test
 	public void addEmployeTest() {
 		logger.info("entering addEmploye()...");
-		Employe employe = new Employe("TestNom", "TestPrenom", "Test@mail.tn", "pwd", actif, Role.INGENIEUR);
+		Employe employe = new Employe("TestNom", "TestPrenom", "Test@mail.tn", "pwd", actif, Role.TECHNICIEN);
 		logger.debug("adding employe " + employe);
 		String addedEmployePrenom = employeService.getEmployePrenomById(employeService.addOrUpdateEmploye(employe));
 		assertEquals(addedEmployePrenom, employe.getPrenom());
@@ -122,7 +122,7 @@ public class ControllerEmployeImplTest {
 	@Test
 	public void updateEmployeTest() {
 		logger.info("entering updateEmployeTest()...");
-		Employe employe = new Employe(employeIdToBeUpdated, "ModifyTestNom", "ModifyTestPrenom", "test@lo.tn", "newpwd", actif, Role.INGENIEUR);
+		Employe employe = new Employe(305, "newnom", "newpronom", "email@test.tn", "newpwd", actif, Role.CHEF_DEPARTEMENT);
 		logger.debug("updating employe to " + employe);
 		assertEquals(employeIdToBeUpdated, employeService.addOrUpdateEmploye(employe));
 		logger.info("Employe updated, exiting updateEmploye()");
