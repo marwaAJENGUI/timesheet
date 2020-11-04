@@ -31,7 +31,7 @@ public class RestControlTimesheet {
 	IEntrepriseService ientrepriseservice;
 	@Autowired
 	ITimesheetService itimesheetservice;
-	static final String DATE_FORMAT="dd-mm-yyyy";
+	static final String DATE_FORMAT="dd-MM-yyyy";
 	// http://localhost:8081/SpringMVC/servlet/ajouterMission
 	@PostMapping("/ajouterMission")
 	@ResponseBody
