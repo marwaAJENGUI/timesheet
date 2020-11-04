@@ -31,7 +31,7 @@ public class ControllerEmployeImplTest {
 	private static String password;
 	private Boolean loggedIn;
 
-	int employeIdToBeUpdated = 2;
+	int employeIdToBeUpdated = 305;
 	private Employe authenticatedUser = null;
 	private boolean actif;
 
@@ -45,8 +45,8 @@ public class ControllerEmployeImplTest {
 
 	@BeforeClass
 	public static void setUp() {
-		login = "Khaled.kallel@ssiiconsulting.tn";
-		password = "aaa";
+		login = "test@lo.tn";
+		password = "password";
 	}
 
 	@Test
