@@ -150,8 +150,10 @@ public class ControllerEntrepriseImplTest {
 		sizeListE = listentreprises.size();
 
 		logger.debug("Table Entreprise current size:" + sizeListE);
+		
+		if (sizeListE>=3) {
 
-		idE = listentreprises.get(sizeListE - 1).getId();
+		idE = listentreprises.get(sizeListE - 2).getId();
 
 		logger.debug("deleting row of [" + idE + "] index...");
 
@@ -164,6 +166,9 @@ public class ControllerEntrepriseImplTest {
 
 		assertEquals(sizeListE - 1, sizeNewList);
 		logger.debug("Delete method executed successfully.");
+		
+		}
+		else logger.info("Please check your database before proceding with the delete method test.");
 
 	}
 
