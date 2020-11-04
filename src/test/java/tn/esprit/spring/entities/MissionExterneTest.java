@@ -50,7 +50,7 @@ public class MissionExterneTest {
 		assertEquals(name, actual.getName());
 		assertEquals(description, actual.getDescription());
 		assertEquals(emailFacturation, actual.getEmailFacturation());
-		assertEquals(tauxJournalierMoyen, actual.getTauxJournalierMoyen());
+		assertEquals(tauxJournalierMoyen, actual.getTauxJournalierMoyen(),0.0001);
 	}
 	
 	@Test
@@ -62,6 +62,6 @@ public class MissionExterneTest {
 	@Test
 	public void tauxJournalierMoyenTest() {
 		missionExterne.setTauxJournalierMoyen(tauxJournalierMoyen);
-		assertEquals(tauxJournalierMoyen, missionExterne.getTauxJournalierMoyen());
+		assertEquals(tauxJournalierMoyen, missionExterne.getTauxJournalierMoyen(),0.0001);
 	}
 }
