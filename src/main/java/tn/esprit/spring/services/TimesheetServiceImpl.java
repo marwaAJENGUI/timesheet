@@ -24,7 +24,7 @@ import tn.esprit.spring.repository.TimesheetRepository;
 @Service
 public class TimesheetServiceImpl implements ITimesheetService {
 	
-
+	private static final Logger logger = Logger.getLogger(TimesheetServiceImpl.class);
 	@Autowired
 	MissionRepository missionRepository;
 	@Autowired
@@ -36,10 +36,15 @@ public class TimesheetServiceImpl implements ITimesheetService {
   private static Logger log = Logger.getLogger(InvocationTrace.class);
 
 	public int ajouterMission(Mission mission) {
-		missionRepository.save(mission);
+		logger.info("In Service:ajouterMissio() : ");
+		Mission m=missionRepository.save(mission);
+		if(!m.getName().equals(mission.getName())){
+			logger.warn("opération d'enregistrement de données a été echouée");
+		}
+		logger.info("Out of Service:ajouterMission() : ");
 		return mission.getId();
 	}
-    
+    //hhhhjj
 	public void affecterMissionADepartement(int missionId, int depId) {
 		Optional<Mission> oppMission= missionRepository.findById(missionId);
 		if (oppMission.isPresent()){
@@ -105,7 +110,7 @@ public class TimesheetServiceImpl implements ITimesheetService {
 				log.info("l'employe doit etre chef de departement de la mission en question");
 				return;
 			}
-		}
+		} else log.debug("Employee not found");
 		
 		TimesheetPK timesheetPK = new TimesheetPK(missionId, employeId, dateDebut, dateFin);
 		Timesheet timesheet =timesheetRepository.findBytimesheetPK(timesheetPK);
@@ -114,7 +119,7 @@ public class TimesheetServiceImpl implements ITimesheetService {
 		timesheetRepository.save(timesheet);
 		log.info("timesheet= "+timesheet);		
 		//Comment Lire une date de la base de données
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		log.info("dateDebut : " + dateFormat.format(timesheet.getTimesheetPK().getDateDebut()));
 	}
 

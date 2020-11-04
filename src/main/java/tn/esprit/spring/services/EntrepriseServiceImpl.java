@@ -132,5 +132,10 @@ public class EntrepriseServiceImpl implements IEntrepriseService {
 		
 		
 	}
+	
+	public List<Entreprise> getAllEnterprise(){
+		List<Entreprise> entreprises =(List<Entreprise>) entrepriseRepoistory.findAll();
+		return entreprises;
+	}
 
 }
