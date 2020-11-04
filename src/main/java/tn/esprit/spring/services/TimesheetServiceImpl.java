@@ -24,7 +24,7 @@ import tn.esprit.spring.repository.TimesheetRepository;
 @Service
 public class TimesheetServiceImpl implements ITimesheetService {
 	
-	private static final Logger logger = Logger.getLogger(EntrepriseServiceImpl.class);
+	private static final Logger logger = Logger.getLogger(TimesheetServiceImpl.class);
 	@Autowired
 	MissionRepository missionRepository;
 	@Autowired
@@ -36,7 +36,12 @@ public class TimesheetServiceImpl implements ITimesheetService {
   private static Logger log = Logger.getLogger(InvocationTrace.class);
 
 	public int ajouterMission(Mission mission) {
-		missionRepository.save(mission);
+		logger.info("In Service:ajouterMissio() : ");
+		Mission m=missionRepository.save(mission);
+		if(!m.getName().equals(mission.getName())){
+			logger.warn("opération d'enregistrement de données a été echouée");
+		}
+		logger.info("Out of Service:ajouterMission() : ");
 		return mission.getId();
 	}
     
