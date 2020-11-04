@@ -52,7 +52,7 @@ public class ControllerEmployeImpl {
 	private Integer employeIdToBeUpdated; // getter et setter
 
 	public String doLogin() {
-		logger.debug("entering doLogin()...");
+		logger.info("entering doLogin()...");
 		try {
 			String navigateTo = "null";
 			logger.debug("getting user info...");
@@ -65,34 +65,34 @@ public class ControllerEmployeImpl {
 			}
 
 			else {
-				logger.debug("Authentication failed of user " + login + "/" + password + " failed");
+				logger.warn("Authentication failed of user " + login + "/" + password + " failed");
 				FacesMessage facesMessage = new FacesMessage(
 						"Login Failed: Please check your username/password and try again.");
 				FacesContext.getCurrentInstance().addMessage("form:btn", facesMessage);
 			}
 			logger.warn("exiting doLogin() with failed authentication...");
 			return navigateTo;
-		} catch (NullPointerException e) {
-			logger.error("exiting doLogin() with Null pointer exception error");
+		} catch (Exception e) {
+			logger.error("exiting doLogin() with " + e);
 			return "null";
 		}
 	}
 
 	public String doLogout() {
-		logger.debug("entering doLogout()...");
+		logger.info("entering doLogout()...");
 		try {
 			FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 			logger.debug("logging out...");
 			logger.debug("exiting doLogout()");
 			return "/login.xhtml?faces-redirect=true";
-		} catch (NullPointerException e) {
-			logger.error("exiting doLogout() with Null pointer exception error");
+		} catch (Exception e) {
+			logger.error("exiting doLogout() with " + e);
 			return "null";
 		}
 	}
 
 	public String addEmploye() {
-		logger.debug("entering addEmploye()...");
+		logger.info("entering addEmploye()...");
 		try {
 			Employe employe = new Employe(nom, prenom, email, password, actif, role);
 			if (authenticatedUser == null || !loggedIn) {
@@ -103,14 +103,14 @@ public class ControllerEmployeImpl {
 			employeService.addOrUpdateEmploye(employe);
 			logger.debug("employe added, exiting addEmploye()...");
 			return "null";
-		} catch (NullPointerException e) {
-			logger.error("exiting addEmploye() with Null pointer exception error");
+		} catch (Exception e) {
+			logger.error("exiting addEmploye() with " + e);
 			return "null";
 		}
 	}
 
 	public String removeEmploye(int employeId) {
-		logger.debug("entering removeEmploye()...");
+		logger.info("entering removeEmploye()...");
 		try {
 			String navigateTo = "null";
 			if (authenticatedUser == null || !loggedIn) {
@@ -122,14 +122,14 @@ public class ControllerEmployeImpl {
 			employeService.deleteEmployeById(employeId);
 			logger.debug("employe deleted, exiting removeEmploye()...");
 			return navigateTo;
-		} catch (NullPointerException e) {
-			logger.error("exiting removeEmploye() with Null pointer exception error");
+		} catch (Exception e) {
+			logger.error("exiting removeEmploye() with " + e);
 			return "null";
 		}
 	}
 
 	public String displayEmploye(Employe empl) {
-		logger.debug("entering diplayEmploye()...");
+		logger.info("entering diplayEmploye()...");
 		try {
 			String navigateTo = "null";
 			if (authenticatedUser == null || !loggedIn) {
@@ -148,14 +148,14 @@ public class ControllerEmployeImpl {
 
 			logger.debug("exiting displayEmploye()");
 			return navigateTo;
-		} catch (NullPointerException e) {
-			logger.error("exiting displayEmploye() Null pointer exception error");
+		} catch (Exception e) {
+			logger.error("exiting displayEmploye() with " + e);
 			return "null";
 		}
 	}
 
 	public String updateEmploye() {
-		logger.debug("entering updateEmploye()...");
+		logger.info("entering updateEmploye()...");
 		try {
 			String navigateTo = "null";
 			Employe employe = new Employe(employeIdToBeUpdated, nom, prenom, email, password, actif, role);
@@ -169,8 +169,8 @@ public class ControllerEmployeImpl {
 			employeService.addOrUpdateEmploye(employe);
 			logger.debug("Employe updated, exiting updateEmploye()");
 			return navigateTo;
-		} catch (NullPointerException e) {
-			logger.error("exiting updateEmploye() Null pointer exception error");
+		} catch (Exception e) {
+			logger.error("exiting updateEmploye() with " + e);
 			return "null";
 		}
 	}

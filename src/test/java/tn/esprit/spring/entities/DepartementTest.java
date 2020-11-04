@@ -6,10 +6,14 @@ import static org.junit.Assert.assertNotEquals;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Before;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+
+import nl.jqno.equalsverifier.EqualsVerifier;
 
 
 public class DepartementTest {
@@ -35,46 +39,58 @@ public class DepartementTest {
 	}
 	
 	@Test
-	public void DepartementConstructorTest() {
+	public void testDepartementConstructor() {
 		Departement actual=new Departement();
 		assertNotEquals(null, actual);
 	}
 	@Test
-	public void DepartementConstructorParamTest() {
+	public void testDepartementConstructorParam() {
 		Departement actual=new Departement(name);
 		assertNotEquals(null, actual);
 		assertEquals(name, actual.getName());
 	}
 	
 	@Test
-	public void idTest() {
+	public void testId() {
 		departement.setId(id);
 		assertEquals(id, departement.getId());
 	}
 	
 	@Test
-	public void nameTest() {
+	public void testName() {
 		departement.setName(name);
 		assertEquals(name,departement.getName());
 	}
 
 	@Test
-	public void employesTest() {
+	public void testEmployes() {
 		departement.setEmployes(employes);
 		assertEquals(employes, departement.getEmployes());
 	}
 	
 	@Test
-	public void missionsTest() {
+	public void TestMissions() {
 		departement.setMissions(missions);
 		assertEquals(missions, departement.getMissions());
 	}
 
 	@Test
-	public void entrepriseTest() {
+	public void testEntreprise() {
 		departement.setEntreprise(entreprise);
 		assertEquals(entreprise, departement.getEntreprise());
 	}
 
-
+	@Test
+	public void testEqualsAndHashCode() {
+		List<Employe> listEmployes=new ArrayList<Employe>();
+		listEmployes.add(new Employe("nom","prenom","email@mail.com",true,Role.INGENIEUR));
+		departement.setEmployes(employes);
+	    EqualsVerifier.simple().forClass(Departement.class)
+	    .withPrefabValues(List.class, departement.getEmployes(), listEmployes)
+	    .withIgnoredAnnotations(Entity.class, Id.class)
+	    //.suppress(Warning.STRICT_INHERITANCE)
+	    //.suppress(Warning.NONFINAL_FIELDS)
+	    .verify();
+	}
+	
 }

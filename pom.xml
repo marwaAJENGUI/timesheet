@@ -120,6 +120,13 @@
 		    <artifactId>log4j</artifactId>
 		    <version>1.2.17</version>
 		</dependency>
+		
+		<dependency>
+    <groupId>org.hamcrest</groupId>
+    <artifactId>hamcrest-all</artifactId>
+    <version>1.3</version>
+    <scope>test</scope>
+</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.junit/junit-bom -->
 		<dependency>
@@ -153,6 +160,14 @@
 		    <version>1.18.16</version>
 		    <scope>provided</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/nl.jqno.equalsverifier/equalsverifier -->
+		<dependency>
+		    <groupId>nl.jqno.equalsverifier</groupId>
+		    <artifactId>equalsverifier</artifactId>
+		    <version>3.5</version>
+		    <scope>test</scope>
+		</dependency>
+				
 	</dependencies>
 	<build>
 		<plugins>
@@ -178,12 +193,7 @@
 			    <artifactId>maven-release-plugin</artifactId>
 			    <version>3.0.0-M1</version>
 			    <configuration>
-			      <!--
-			        During release:perform, enable the "release" profile
-			       -->
-			      	<releaseProfiles>release</releaseProfiles>
-			      	
-		          <tagNameFormat>v@{project.version}</tagNameFormat>
+					<tagNameFormat>v@{project.version}</tagNameFormat>
 			    </configuration>
 			  </plugin>
 		</plugins>
