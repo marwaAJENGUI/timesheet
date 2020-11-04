@@ -57,13 +57,13 @@ public class MissionTest {
 	@Test
 	public void nameTest() {
 		mission.setName(name);
-		assertEquals(id, mission.getName());
+		assertEquals(name, mission.getName());
 	}
 	
 	@Test
 	public void descriptionTest() {
 		mission.setDescription(description);
-		assertEquals(id, mission.getDescription());
+		assertEquals(description, mission.getDescription());
 	}
 	
 	@Test
