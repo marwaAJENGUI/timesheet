@@ -36,9 +36,9 @@ public class TimesheetServiceImpl implements ITimesheetService {
   private static Logger log = Logger.getLogger(InvocationTrace.class);
 
 	public int ajouterMission(Mission mission) {
-		logger.info("In Service:ajouterMissio() : ");
+		logger.info("In Service:ajouterMission() : ");
 		Mission m=missionRepository.save(mission);
-		if(!m.getName().equals(mission.getName())){
+		if(m.getId()!=missionRepository.findTopByOrderByIdDesc().getId()){
 			logger.warn("opération d'enregistrement de données a été echouée");
 		}
 		logger.info("Out of Service:ajouterMission() : ");
@@ -46,6 +46,7 @@ public class TimesheetServiceImpl implements ITimesheetService {
 	}
     //hhhhjj
 	public void affecterMissionADepartement(int missionId, int depId) {
+		logger.info("In Service:affecterMissionADepartement() : ");
 		Optional<Mission> oppMission= missionRepository.findById(missionId);
 		if (oppMission.isPresent()){
 			Mission mission = oppMission.get();
@@ -54,8 +55,16 @@ public class TimesheetServiceImpl implements ITimesheetService {
 				Departement dep = oppDepartement.get();
 				mission.setDepartement(dep);
 				missionRepository.save(mission);
+				logger.debug("la mission d'id:"+mission.getId()+" a été affecter à la departement d'id:"+dep.getId());
+			}
+			else {
+				logger.warn("département n'existe pas");
 			}
 		}
+		else {
+			logger.warn("mission n'existe pas");
+		}
+		logger.info("Out of Service:affecterMissionADepartemen() : ");
 	}
 
 	public void ajouterTimesheet(int missionId, int employeId, Date dateDebut, Date dateFin) {

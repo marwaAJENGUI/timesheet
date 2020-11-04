@@ -7,5 +7,6 @@ import tn.esprit.spring.entities.Mission;
 
 @Repository
 public interface MissionRepository extends CrudRepository<Mission, Integer> {
+	Mission findTopByOrderByIdDesc();
 
 }
