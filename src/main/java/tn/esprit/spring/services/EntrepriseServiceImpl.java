@@ -2,6 +2,7 @@ package tn.esprit.spring.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +27,11 @@ public class EntrepriseServiceImpl implements IEntrepriseService {
 	public int ajouterEntreprise(Entreprise entreprise) {
 		logger.info("In Service:ajouterEntreprise() : ");
 		Entreprise e=entrepriseRepoistory.save(entreprise);
-		if(e.getName().equals(entreprise.getName())) {
+		if(e.getId()==entrepriseRepoistory.findTopByOrderByIdDesc().getId()) {
 			logger.debug("l'entreprise "+e.getName()+" id:"+e.getId()+" a été bien enregistrée dans la BD");
 		}
 		else {
-			logger.warn("opération d'enregistrement de données a été echouée");
+			logger.warn("opération d'enregistrement de l'entreprise id:"+entreprise.getId()+" a été echouée");
 		}
 		logger.info("Out of ajouterEntreprise()");
 		return entreprise.getId();
