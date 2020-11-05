@@ -44,7 +44,7 @@ public class TimesheetServiceImpl implements ITimesheetService {
 		logger.info("Out of Service:ajouterMission() : ");
 		return mission.getId();
 	}
-    //hhhhjj
+  
 	public void affecterMissionADepartement(int missionId, int depId) {
 		logger.info("In Service:affecterMissionADepartement() : ");
 		Optional<Mission> oppMission= missionRepository.findById(missionId);
@@ -66,8 +66,10 @@ public class TimesheetServiceImpl implements ITimesheetService {
 		}
 		logger.info("Out of Service:affecterMissionADepartemen() : ");
 	}
+	
 
 	public void ajouterTimesheet(int missionId, int employeId, Date dateDebut, Date dateFin) {
+		logger.info("In Service:ajouterTimesheet() : ");
 		TimesheetPK timesheetPK = new TimesheetPK();
 		timesheetPK.setDateDebut(dateDebut);
 		timesheetPK.setDateFin(dateFin);
@@ -78,14 +80,23 @@ public class TimesheetServiceImpl implements ITimesheetService {
 		timesheet.setTimesheetPK(timesheetPK);
 		Optional <Mission> opMission = missionRepository.findById(missionId);
 		if (opMission.isPresent()) {
+			
 			timesheet.setMission(opMission.get());
-		}else throw new IllegalArgumentException("Invalide mission Id: mission does not exist");
+		}else {
+			logger.fatal("Invalide mission Id: mission does not exist");
+			throw new IllegalArgumentException("Invalide mission Id: mission does not exist");
+		}
 		Optional <Employe> opEmploye = employeRepository.findById(employeId);	
 		if (opEmploye.isPresent()) {
 			timesheet.setEmploye(opEmploye.get());
-		}else throw new IllegalArgumentException("Invalide employe Id: employee does not exist");			
+		}else {
+			logger.fatal("Invalide mission Id: mission does not exist");
+			throw new IllegalArgumentException("Invalide employe Id: employee does not exist");			
+		
+		}
 		timesheet.setValide(false); //par defaut non valide
 		timesheetRepository.save(timesheet);
+		logger.info("Out of Service:ajouterTimesheet() : ");
 		
 		
 	}
