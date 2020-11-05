@@ -33,7 +33,7 @@ public class EmployeServiceImplTest {
 	/*@BeforeEach
 	public void intial(){
 	employeRepository.deleteAll();	
-	}*/
+	}
 	
 	@Test
 	public void should_be_able_to_add_an_empoyer() {
@@ -76,6 +76,6 @@ public class EmployeServiceImplTest {
 		assertThat(e.get().getSalaire()).isEqualTo(200);
 			
 	}
-	
+	*/
 	
 }
