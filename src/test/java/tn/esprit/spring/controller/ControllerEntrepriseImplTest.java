@@ -159,7 +159,7 @@ public class ControllerEntrepriseImplTest {
 		
 		if (sizeListE>=3) {
 
-		idE = listentreprises.get(sizeListE - 2).getId();
+		idE = listentreprises.get(2).getId();
 
 		logger.debug("deleting row of [" + idE + "] index...");
 
