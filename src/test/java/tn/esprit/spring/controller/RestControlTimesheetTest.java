@@ -94,7 +94,7 @@ public class RestControlTimesheetTest {
 		assertThat(this.restTemplate.postForObject("http://localhost:" + port + "/SpringMVC/servlet/ajouterMission",mission,
 				String.class)).contains(String.valueOf(idmission));
 	}
-	
+	/*
 	@Test
 	public void testFindAllMissionByEmployeJPQL() throws JsonProcessingException {
 		List<Mission> missionsList = itimesheetservice.findAllMissionByEmployeJPQL(employeId);
@@ -102,7 +102,7 @@ public class RestControlTimesheetTest {
 		assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/SpringMVC/servlet/findAllMissionByEmployeJPQL/"+employeId,
 				String.class)).contains(json);
 	}
-	
+	*/
 	@Test
 	public void testAffecterMissionADepartement() {
 	    requestJson = "{}";
