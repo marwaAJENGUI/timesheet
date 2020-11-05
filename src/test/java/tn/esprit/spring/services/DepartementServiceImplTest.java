@@ -21,11 +21,11 @@ public class DepartementServiceImplTest{
 	@Autowired
 	DepartementServiceImpl deptService;
 	
-	/*
+	
 	@Test
 	public void testGetAllDepartements() {
 		assertEquals(((List<Departement>)deptRepoistory.findAll()).size(),deptService.getAllDepartements().size());	
 	}
-	*/
+	
 	
 }
