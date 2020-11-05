@@ -106,6 +106,7 @@ public class RestControlTimesheetTest {
 	@Test
 	public void testAffecterMissionADepartement() {
 	    requestJson = "{}";
+	    this.setIdmission(14);
 		ResponseEntity<String> entity = new TestRestTemplate().exchange(
 	            "http://localhost:" + this.port + "/SpringMVC/servlet/affecterMissionADepartement/"+idmission+"/"+departementId, HttpMethod.PUT,
 	            new HttpEntity<String>(requestJson,headers),
