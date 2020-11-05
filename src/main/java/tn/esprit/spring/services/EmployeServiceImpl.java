@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +22,7 @@ import tn.esprit.spring.repository.TimesheetRepository;
 
 @Service
 public class EmployeServiceImpl implements IEmployeService {
-
+	private static final Logger logger = Logger.getLogger(EmployeServiceImpl.class);
 	@Autowired
 	EmployeRepository employeRepository;
 	@Autowired
@@ -38,11 +39,18 @@ public class EmployeServiceImpl implements IEmployeService {
 
 	@Override
 	public int addOrUpdateEmploye(Employe employe) {
-		employeRepository.save(employe);
+		logger.info("in addOrUpdateEmploye()");
+		Employe e = employeRepository.save(employe);
+		if (employe.getId() == e.getId()) {
+			logger.debug("l'employe d'id a ete modifer" + e.getId());
+		} else {
+			logger.warn("l'employe d'id " + employe.getId() + " n'existe pas");
+		}
+		logger.info("out addOrUpdateEmploye()");
 		return employe.getId();
 	}
 
-
+   
 	public void mettreAjourEmailByEmployeId(String email, int employeId) {
 		Employe employe = employeRepository.findById(employeId).get();
 		employe.setEmail(email);
@@ -86,7 +94,13 @@ public class EmployeServiceImpl implements IEmployeService {
 	// Tablesapce (espace disque) 
 
 	public int ajouterContrat(Contrat contrat) {
-		contratRepoistory.save(contrat);
+		logger.info("in ajouterContrat");
+		Contrat c=contratRepoistory.save(contrat);
+		if (contrat.getReference() == c.getReference()) {
+			logger.debug("le contrat de réfrence "+ c.getReference()+" a ete modifer" );
+		} else {
+			logger.debug("le contrat de réfrence "+ c.getReference()+"n'est pas trouvé" );
+		}
 		return contrat.getReference();
 	}
 
