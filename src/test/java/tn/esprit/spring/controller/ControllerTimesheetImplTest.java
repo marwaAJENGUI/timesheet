@@ -77,6 +77,8 @@ public class ControllerTimesheetImplTest {
 	public void init() {
 		
 	}
+	
+	/*
 	@Test
 	public void ajouterTimesheet() 
 	{	
@@ -143,6 +145,7 @@ public class ControllerTimesheetImplTest {
 
 	} 
 	
-	
+	*
+	*/
 	
 }
