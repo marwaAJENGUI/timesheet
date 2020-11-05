@@ -24,6 +24,30 @@ import lombok.EqualsAndHashCode;
 		  property = "id")
 public class Departement implements Serializable {
 
+		public Departement(int id, String name, Entreprise entreprise) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.entreprise = entreprise;
+	}
+
+		public Departement(int id, String name, List<Mission> missions, Entreprise entreprise) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.missions = missions;
+		this.entreprise = entreprise;
+	}
+
+		public Departement(int id, String name, List<Employe> employes, List<Mission> missions, Entreprise entreprise) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.employes = employes;
+		this.missions = missions;
+		this.entreprise = entreprise;
+	}
+
 		private static final long serialVersionUID = -357738161698377833L;
 
 	@Id

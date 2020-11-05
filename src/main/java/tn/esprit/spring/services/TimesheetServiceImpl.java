@@ -96,6 +96,7 @@ public class TimesheetServiceImpl implements ITimesheetService {
 		}
 		timesheet.setValide(false); //par defaut non valide
 		timesheetRepository.save(timesheet);
+		logger.debug("timesheet a été ajouté");
 		logger.info("Out of Service:ajouterTimesheet() : ");
 		
 		
@@ -137,7 +138,7 @@ public class TimesheetServiceImpl implements ITimesheetService {
 		log.info("timesheet= "+timesheet);
 		timesheet.setValide(true);
 		timesheetRepository.save(timesheet);
-		log.info("timesheet= "+timesheet);		
+		log.info("timesheet a été enregistrée ");		
 		//Comment Lire une date de la base de données
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		log.info("dateDebut : " + dateFormat.format(timesheet.getTimesheetPK().getDateDebut()));
@@ -145,7 +146,11 @@ public class TimesheetServiceImpl implements ITimesheetService {
 
 	@Override
 	public Timesheet findBytimesheetPK(TimesheetPK timesheetPK) {
-		return timesheetRepository.findBytimesheetPK(timesheetPK);
+		log.info("findBytimesheetPK");
+		Timesheet timesheet=timesheetRepository.findBytimesheetPK(timesheetPK);
+			log.debug("timesheet a été trouvée");
+		log.info("findBytimesheetPK");
+		return timesheet;
 	}
 	
 	public List<Mission> findAllMissionByEmployeJPQL(int employeId) {
